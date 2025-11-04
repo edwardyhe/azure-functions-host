@@ -847,6 +847,16 @@ namespace Microsoft.Azure.WebJobs.Script
                         FunctionDescriptor descriptor = null;
                         foreach (var provider in descriptorProviders)
                         {
+                            if (metadata.EntryPoint == "Microsoft.Azure.Workflows.WebJobs.Extensions.Trigger.WorkflowRuntimeTriggerProcessor.HandleFlowTrigger" ||
+                                metadata.EntryPoint == "Microsoft.Azure.Workflows.WebJobs.Extensions.Run.WorkflowRunProcessor.HandleRequestTrigger")
+                            {
+                                metadata.Language = DotNetScriptTypes.DotNetAssembly;
+                                if (provider is MultiLanguageFunctionDescriptorProvider)
+                                {
+                                    continue;
+                                }
+                            }
+                            
                             (bool created, descriptor) = await provider.TryCreate(metadata);
                             if (created)
                             {
