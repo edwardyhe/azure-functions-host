@@ -856,7 +856,7 @@ namespace Microsoft.Azure.WebJobs.Script
                                     continue;
                                 }
                             }
-                            
+
                             (bool created, descriptor) = await provider.TryCreate(metadata);
                             if (created)
                             {
